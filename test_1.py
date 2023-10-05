@@ -22,7 +22,6 @@ class TestYandexWeather:
     with open("testdata.yaml", encoding="utf-8") as f:
         testdata = yaml.safe_load(f)
 
-
     def test_step1(self, browser):
         """
         Тест открывает главную страницу "Яндекс погода",
@@ -54,7 +53,7 @@ class TestYandexWeather:
         SharedObject.set(weather_data=weather_data)
         assert weather_data
 
-    @pytest.mark.skip()
+
     def test_step3(self, browser):
         """
         Тест проверяет, что данные о городе полученные с помощью сервиса API Яндекс.Погоды,
@@ -65,7 +64,7 @@ class TestYandexWeather:
         city_name = test_page.get_city_name(self.testdata["city"])
         assert city_name == json_parser.get_city(SharedObject.get("weather_data"))
 
-    @pytest.mark.skip()
+
     def test_step4(self, browser):
         """
         Проверка соответствия текущей температуры
@@ -75,7 +74,7 @@ class TestYandexWeather:
         fact_temp = test_page.get_fact_temp()
         assert fact_temp == json_parser.get_fact_temp(SharedObject.get("weather_data"))
 
-    @pytest.mark.skip()
+
     def test_step5(self, browser):
         """
         Проверка соответствия ощущаемой температуры
@@ -85,7 +84,7 @@ class TestYandexWeather:
         feels_like = test_page.get_feels_like()
         assert feels_like == json_parser.get_feels_like(SharedObject.get("weather_data"))
 
-    @pytest.mark.skip()
+
     def test_step6(self, browser):
         """
         Проверка соответствия иконки погоды
@@ -95,7 +94,6 @@ class TestYandexWeather:
         icon_src = test_page.get_icon_src()
         assert icon_src == json_parser.get_icon_src(SharedObject.get("weather_data"))
 
-
     def test_step7(self, browser):
         """
         Проверка соответствия погодного описания
@@ -104,3 +102,49 @@ class TestYandexWeather:
         test_page = OperationsHelper(browser)
         condition = test_page.get_condition()
         assert condition == json_parser.get_condition(SharedObject.get("weather_data"))
+
+    def test_step8(self, browser):
+        """
+        Проверка соответствия температуры вчера в это время
+        """
+        logging.info("Test_8 Starting")
+        test_page = OperationsHelper(browser)
+        yesterday_temp = test_page.get_yesterday_temp()
+        assert yesterday_temp == json_parser.get_yesterday_temp(SharedObject.get("weather_data"))
+
+    def test_step9(self, browser):
+        """
+        Проверка соответствия скорости ветра
+        """
+        logging.info("Test_9 Starting")
+        test_page = OperationsHelper(browser)
+        wind_speed = test_page.get_wind_speed()
+        assert wind_speed == json_parser.get_wind_speed(SharedObject.get("weather_data"))
+
+
+    def test_step10(self, browser):
+        """
+        Проверка соответствия направления ветра
+        """
+        logging.info("Test_10 Starting")
+        test_page = OperationsHelper(browser)
+        wind_dir = test_page.get_wind_dir()
+        assert wind_dir == json_parser.get_wind_dir(SharedObject.get("weather_data"))
+
+    def test_step11(self, browser):
+        """
+        Проверка соответствия влажности
+        """
+        logging.info("Test_11 Starting")
+        test_page = OperationsHelper(browser)
+        humidity = test_page.get_humidity()
+        assert humidity == json_parser.get_humidity(SharedObject.get("weather_data"))
+
+    def test_step12(self, browser):
+        """
+        Проверка соответствия давления
+        """
+        logging.info("Test_12 Starting")
+        test_page = OperationsHelper(browser)
+        pressure = test_page.get_pressure()
+        assert pressure == json_parser.get_pressure(SharedObject.get("weather_data"))

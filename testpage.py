@@ -155,13 +155,24 @@ class OperationsHelper(BasePage):
 
     def get_condition(self):
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CONDITION"], description="condition")
-    #    def go_alert(self):
-    #        logging.info("Go_alert")
-    #        alert = self.get_alert()
-    #        text = alert.text
-    #        logging.info(f"Alert text '{text}'")
-    #        alert.accept()
-    #        return text
+
+    def get_yesterday_temp(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_YESTERDAY_TEMP"],
+                                          description="yesterday_temp")[1:]
+
+    def get_wind_speed(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_WIND_SPEED"], description="wind_speed")
+
+
+    def get_wind_dir(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_WIND_DIR"], description="wind_dir")
+
+    def get_humidity(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_HUMIDITY"], description="humidity")[:-1]
+
+    def get_pressure(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_PRESSURE"], description="humidity")[:3]
+
 
     def get_data_weather(self, lat, lon):
         """
