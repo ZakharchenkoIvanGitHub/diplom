@@ -1,0 +1,18 @@
+xpath:
+  LOCATOR_INPUT_CITY: //input[@placeholder='Город или район']
+  LOCATOR_LINK_TEXT: //a [text() = '']
+  LOCATOR_CITY_TITLE: //h1[@id = 'main_title']
+  -LOCATOR_ERROR: //*[@id="app"]/main/div/div/div[2]/h2
+  LOCATOR_BLOG: //*[@id="app"]/main/div/div[1]/h1
+  LOCATOR_CREATE: //button[@id="create-btn"]
+  LOCATOR_TITLE_CREATE: //span[text() = 'Title']/following::input[@type= 'text'][1]
+  LOCATOR_DESCRIPTION_CREATE: //span[text() = 'Description']//following::textarea[1]
+  LOCATOR_CONTENT_CREATE: //span[text() = 'Content']//following::textarea[1]
+  LOCATOR_TITLE_PUBLIC: //h1[@class ='svelte-tv8alb']
+  LOCATOR_CONTENT_PUBLIC: //div[@class = 'content svelte-tv8alb']
+  LOCATOR_INPUT_FILE: // input[ @type = 'file']
+  LOCATOR_CONTACT: // a[text() = 'Contact']
+  LOCATOR_DESCRIPTION_NAME: // span[text() = 'Your name'] // following::input[1]
+  LOCATOR_DESCRIPTION_EMAIL: // span[text() = 'Your email'] // following::input[1]
+
+css:

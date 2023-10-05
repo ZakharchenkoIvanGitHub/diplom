@@ -1,1 +1,8 @@
+city: Лабинск, Краснодарский край
 driver_path: c:\chromedriver.exe
+browser: chrome
+token: 92ba0871-9202-42e9-b511-0f63f972d4d4
+extra: true
+lang: ru_RU
+limit: 7
+hours: true

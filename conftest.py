@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
+from testpage import OperationsHelper
 
 with open("testdata.yaml") as f:
     testdata = yaml.safe_load(f)
@@ -12,6 +13,10 @@ with open("testdata.yaml") as f:
 
 @pytest.fixture(scope="session")
 def browser():
+    """
+    Инициализирует вебдрайвер
+    :return: драйвер браузера firefox или chrome в зависимости от параметра browser
+    """
     if browser == "firefox":
         service = Service(executable_path=GeckoDriverManager().install())
         options = webdriver.FirefoxOptions()
@@ -20,7 +25,9 @@ def browser():
         # service = Service(executable_path=ChromeDriverManager().install())
         service = Service(testdata["driver_path"])
         options = webdriver.ChromeOptions()
+        options.add_argument("--disable-blink-features=AutomationControlled")
         driver = webdriver.Chrome(service=service, options=options)
     yield driver
     driver.quit()
+
 
