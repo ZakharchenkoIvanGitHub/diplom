@@ -14,6 +14,7 @@ class TestSearchLocators:
     for locator in locators["xpath"].keys():
         ids[locator] = (By.XPATH, locators["xpath"][locator])
 
+
 #    for locator in locators["css"].keys():
 #        ids[locator] = (By.CSS_SELECTOR, locators["css"][locator])
 
@@ -34,8 +35,6 @@ class OperationsHelper(BasePage):
         ind = url.find("lon")
         lon = url[ind + 4:ind + 15]
         return lat, lon
-
-
 
     @staticmethod
     def get_city_name(full_name):
@@ -90,6 +89,22 @@ class OperationsHelper(BasePage):
         logging.debug(f"Find text {text} in field {element_name}")
         return text
 
+    def get_attribute_from_element(self, locator, attribute, description=None):
+        if description:
+            element_name = description
+        else:
+            element_name = locator
+        field = self.find_element(locator, time=3)
+        if not field:
+            return None
+        try:
+            attr = field.get_attribute(attribute)
+        except:
+            logging.exception(f"Exception while get text from {element_name}")
+            return None
+        logging.debug(f"Find attribute {attribute} in field {element_name}")
+        return attr
+
     # ENTER TEXT
     def enter_city(self, word):
         self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_INPUT_CITY"], word, description="INPUT_LOGIN")
@@ -127,19 +142,26 @@ class OperationsHelper(BasePage):
 
     # GET TEXT
     def get_city_title(self):
-        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CITY_TITLE"], description="error_text")
-#
-#    def get_blog(self):
-#        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_BLOG"], description="text_blog")
-#
-#    def go_alert(self):
-#        logging.info("Go_alert")
-#        alert = self.get_alert()
-#        text = alert.text
-#        logging.info(f"Alert text '{text}'")
-#        alert.accept()
-#        return text
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CITY_TITLE"], description="city_title")
 
+    def get_fact_temp(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FACT_TEMP"], description="fact_temp")[1:]
+
+    def get_feels_like(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FEELS_LIKE"], description="feels_like")[1:]
+
+    def get_icon_src(self):
+        return self.get_attribute_from_element(TestSearchLocators.ids["LOCATOR_ICON"], 'src', description="icon_src")
+
+    def get_condition(self):
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CONDITION"], description="condition")
+    #    def go_alert(self):
+    #        logging.info("Go_alert")
+    #        alert = self.get_alert()
+    #        text = alert.text
+    #        logging.info(f"Alert text '{text}'")
+    #        alert.accept()
+    #        return text
 
     def get_data_weather(self, lat, lon):
         """

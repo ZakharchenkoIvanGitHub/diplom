@@ -2,11 +2,11 @@ xpath:
   LOCATOR_INPUT_CITY: //input[@placeholder='Город или район']
   LOCATOR_LINK_TEXT: //a [text() = '']
   LOCATOR_CITY_TITLE: //h1[@id = 'main_title']
-  -LOCATOR_ERROR: //*[@id="app"]/main/div/div/div[2]/h2
-  LOCATOR_BLOG: //*[@id="app"]/main/div/div[1]/h1
-  LOCATOR_CREATE: //button[@id="create-btn"]
-  LOCATOR_TITLE_CREATE: //span[text() = 'Title']/following::input[@type= 'text'][1]
-  LOCATOR_DESCRIPTION_CREATE: //span[text() = 'Description']//following::textarea[1]
+  LOCATOR_FACT_TEMP: //div[@class = 'temp fact__temp fact__temp_size_s']
+  LOCATOR_FEELS_LIKE: //div[text() = 'Ощущается как']//following::span[1]
+  LOCATOR_ICON: //div[@class = 'temp fact__temp fact__temp_size_s']//following::img[1]
+  LOCATOR_CONDITION: //div[@class = 'link__condition day-anchor i-bem']
+  -LOCATOR_DESCRIPTION_CREATE: //span[text() = 'Description']//following::textarea[1]
   LOCATOR_CONTENT_CREATE: //span[text() = 'Content']//following::textarea[1]
   LOCATOR_TITLE_PUBLIC: //h1[@class ='svelte-tv8alb']
   LOCATOR_CONTENT_PUBLIC: //div[@class = 'content svelte-tv8alb']
