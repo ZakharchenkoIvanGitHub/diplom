@@ -6,3 +6,6 @@ extra: true
 lang: ru_RU
 limit: 7
 hours: true
+mail_password: XJhDxzzNV5iVxqda32C2
+fromaddr_report: ivan.zakharchenko.test@mail.ru
+toaddr_report: zakharka2000@ya.ru

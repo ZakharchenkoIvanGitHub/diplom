@@ -1,9 +1,8 @@
-import pytest
-
 from testpage import OperationsHelper
 import json_parser
 import logging
 import yaml
+from weather_api import get_data_weather
 
 
 class SharedObject(object):
@@ -49,7 +48,7 @@ class TestYandexWeather:
         """
         logging.info("Test_2 Starting")
         test_page = OperationsHelper(browser)
-        weather_data = test_page.get_data_weather(SharedObject.get("lat"), SharedObject.get("lon"))
+        weather_data = get_data_weather(SharedObject.get("lat"), SharedObject.get("lon"))
         SharedObject.set(weather_data=weather_data)
         assert weather_data
 

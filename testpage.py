@@ -1,13 +1,14 @@
 from BaseApp import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-import requests
 import logging
 import yaml
 
 
 class TestSearchLocators:
+    """
+    Хранит данные о локаторах для поиска тестируемых элементов в виде коллекции словаря
+    """
     ids = dict()
     with open("locators.yaml", encoding="utf-8") as f:
         locators = yaml.safe_load(f)
@@ -19,17 +20,31 @@ class TestSearchLocators:
 #        ids[locator] = (By.CSS_SELECTOR, locators["css"][locator])
 
 class OperationsHelper(BasePage):
+    """
+    Реализует вспомогательные методы для поиска и взаимодействия с элементами веб страницы
+    """
     with open("testdata.yaml", encoding="utf-8") as f:
         testdata = yaml.safe_load(f)
 
     @staticmethod
     def input_city_to_xpath(locator, city):
+        """
+        Вставляет название города в xpath локатора
+        :param locator: локатор для поиска элемента
+        :param city: название города
+        :return: измененный локатор
+        """
         ind = locator[1].find("''")
         xpath = f"{locator[1][:ind + 1]}{city}{locator[1][ind + 1:]}"
         return locator[0], xpath
 
     @staticmethod
     def get_lat_lon(url):
+        """
+        Получает из url адреса широту и долготу
+        :param url: url адрес
+        :return:широта и долгота
+        """
         ind = url.find("lat")
         lat = url[ind + 4:ind + 15]
         ind = url.find("lon")
@@ -38,11 +53,23 @@ class OperationsHelper(BasePage):
 
     @staticmethod
     def get_city_name(full_name):
+        """
+        Получает название города
+        :param full_name: полное название города с указанием региона
+        :return: название города
+        """
         ind = full_name.find(",")
         name = full_name[:ind] if ind != -1 else full_name
         return name
 
     def enter_text_info_field(self, locator, word, description=None):
+        """
+        Вводит строку текста в поле найденному по локатору
+        :param locator: локатор для поиска элемента
+        :param word: строка текста
+        :param description: описание локатора
+        :return: True в случае успеха
+        """
         if description:
             element_name = description
         else:
@@ -50,15 +77,22 @@ class OperationsHelper(BasePage):
         logging.debug(f"Send {word} to element {element_name}")
         field = self.find_element(locator)
         if not field:
-            logging.error(f"Element {locator} not found")
+            logging.error(f"Element {element_name} not found")
             return False
         try:
             field.clear()
             field.send_keys(word)
         except:
-            logging.exception(f"Exception while operation with {locator}")
+            logging.exception(f"Exception while operation with {element_name}")
+            return True
 
     def click_button(self, locator, description=None):
+        """
+        Кликает по элементу найденому по локатору
+        :param locator: локатор для поиска элемента
+        :param description: описание локатора
+        :return: True в случае успеха
+        """
         if description:
             element_name = description
         else:
@@ -74,6 +108,12 @@ class OperationsHelper(BasePage):
         return True
 
     def get_text_from_element(self, locator, description=None):
+        """
+        Получает хранящийся в элементе текст
+        :param locator: локатор для поиска элемента
+        :param description: описание локатора
+        :return: True в случае успеха
+        """
         if description:
             element_name = description
         else:
@@ -90,6 +130,13 @@ class OperationsHelper(BasePage):
         return text
 
     def get_attribute_from_element(self, locator, attribute, description=None):
+        """
+        Получает значение атрибута элемента
+        :param locator:  локатор для поиска элемента
+        :param attribute: название атрибута
+        :param description: описание локатора
+        :return: значение атрибута
+        """
         if description:
             element_name = description
         else:
@@ -106,97 +153,86 @@ class OperationsHelper(BasePage):
         return attr
 
     # ENTER TEXT
-    def enter_city(self, word):
-        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_INPUT_CITY"], word, description="INPUT_LOGIN")
-
-    #
-    #    def enter_pass(self, word):
-    #        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_INPUT_PASSWORD"], word, description="INPUT_PASSWORD")
-    #
-    #    def enter_name(self, word):
-    #        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_DESCRIPTION_NAME"], word, description="INPUT_NAME")
-    #
-    #    def enter_email(self, word):
-    #        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_DESCRIPTION_EMAIL"], word, description="INPUT_EMAIL")
-    #
-    #    def enter_content(self, word):
-    #        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_CONTENT_CREATE"], word, description="INPUT_CREATE")
+    def enter_city(self, city):
+        """
+        Вводит название города в поле ввода
+        :param city: название города
+        """
+        self.enter_text_info_field(TestSearchLocators.ids["LOCATOR_INPUT_CITY"], city, description="INPUT_LOGIN")
 
     # CLICK
     def press_enter_city(self):
+        """
+        Эмулирует нажатие клавиши ENTER
+        """
         self.find_element(TestSearchLocators.ids["LOCATOR_INPUT_CITY"]).send_keys(Keys.ENTER)
 
     def click_city(self, city):
+        """
+        Кликает по указанному городу
+        :param city: название города
+        """
         self.click_button(self.input_city_to_xpath(TestSearchLocators.ids['LOCATOR_LINK_TEXT'], city),
                           description="click_city")
 
-    #
-    #    def click_input_file(self):
-    #        self.click_button(TestSearchLocators.ids["LOCATOR_INPUT_FILE"], description="input file")
-    #
-    #    def click_contact(self):
-    #        self.click_button(TestSearchLocators.ids["LOCATOR_CONTACT"], description="contact")
-    #
-    #    def click_button_contact_as(self):
-    #        self.click_button(TestSearchLocators.ids["LOCATOR_BUTTON"], description="contact as")
-
     # GET TEXT
     def get_city_title(self):
+        """
+        Возвращает название города
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CITY_TITLE"], description="city_title")
 
     def get_fact_temp(self):
+        """
+        Возвращает текущую температуру
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FACT_TEMP"], description="fact_temp")[1:]
 
     def get_feels_like(self):
+        """
+        Возвращает ощущаемую температуру
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FEELS_LIKE"], description="feels_like")[1:]
 
     def get_icon_src(self):
+        """
+        Возвращает адрес иконки погоды
+        """
         return self.get_attribute_from_element(TestSearchLocators.ids["LOCATOR_ICON"], 'src', description="icon_src")
 
     def get_condition(self):
+        """
+        Возвращает описание погоды
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_CONDITION"], description="condition")
 
     def get_yesterday_temp(self):
+        """
+        Возвращает температуру вчера в это время
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_YESTERDAY_TEMP"],
                                           description="yesterday_temp")[1:]
 
     def get_wind_speed(self):
+        """
+        Возвращает скорость ветра
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_WIND_SPEED"], description="wind_speed")
 
-
     def get_wind_dir(self):
+        """
+        Возвращает направление ветра
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_WIND_DIR"], description="wind_dir")
 
     def get_humidity(self):
+        """
+        Возвращает влажность
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_HUMIDITY"], description="humidity")[:-1]
 
     def get_pressure(self):
+        """
+        Возвращает атмосферное давление
+        """
         return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_PRESSURE"], description="humidity")[:3]
-
-
-    def get_data_weather(self, lat, lon):
-        """
-        Получает данные о погоде используя API сервис Яндекс
-        :param lat: <широта>
-        :param lon:<долгота>
-        :return: данные о погоде в формате json
-        """
-        params = {"lat": lat,
-                  "lon": lon,
-                  "extra": self.testdata["extra"],
-                  "lang": self.testdata["lang"],
-                  "limit": self.testdata["limit"],
-                  "hours": self.testdata["hours"]}
-
-        response = requests.get("https://api.weather.yandex.ru/v2/forecast?",
-                                headers={"X-Yandex-API-Key": self.testdata["token"]},
-                                params=params)
-        if response.status_code == 200:
-            logging.debug(f"Данные о погоде получены")
-            return response.json()
-        elif response.status_code == 403:
-            logging.error(f"Превышение суточного лимита запросов, status_code {response.status_code}")
-        elif response.status_code == 404:
-            logging.error(f"Параметры заданы некорректно, status_code {response.status_code}")
-        else:
-            logging.error(f"Данные о погоде не получены, status_code {response.status_code}")

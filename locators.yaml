@@ -11,8 +11,4 @@ xpath:
   LOCATOR_WIND_DIR: //span[@class = 'wind-speed']//following::abbr[1]
   LOCATOR_HUMIDITY: //div[@class = 'term term_orient_v fact__humidity']
   LOCATOR_PRESSURE: //div[@class = 'term term_orient_v fact__pressure']
-  -LOCATOR_CONTACT: // a[text() = 'Contact']
-  LOCATOR_DESCRIPTION_NAME: // span[text() = 'Your name'] // following::input[1]
-  LOCATOR_DESCRIPTION_EMAIL: // span[text() = 'Your email'] // following::input[1]
-
 css:
