@@ -6,13 +6,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from send_report_to_email import send_message_to_email
 
-
 with open("testdata.yaml") as f:
     testdata = yaml.safe_load(f)
     browser = testdata["browser"]
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def browser():
     """
     Инициализирует вебдрайвер
@@ -30,9 +29,11 @@ def browser():
         driver = webdriver.Chrome(service=service, options=options)
     yield driver
     driver.quit()
+
+
+
+def pytest_sessionfinish(session, exitstatus):
     send_message_to_email(testdata['fromaddr_report'],
-                          testdata['toaddr_report'],
-                          testdata['mail_password'],
-                          "report.html")
-
-
+                                    testdata['toaddr_report'],
+                                    testdata['mail_password'],
+                                    "report.html")

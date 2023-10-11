@@ -24,12 +24,16 @@ def send_message_to_email(sender_email, recipient_email, password, filename):
     msg.attach(MIMEText(message_body, 'plain'))
 
     # Добавляем файл во вложение
-    with open(filename, 'rb') as f:
-        attach = MIMEBase('application', 'octet-stream')
-        attach.set_payload(f.read())
-        encoders.encode_base64(attach)
-        attach.add_header('Content-Disposition', f'attachment; filename= {filename}')
-        msg.attach(attach)
+    try:
+        with open(filename, 'rb') as f:
+            attach = MIMEBase('application', 'octet-stream')
+            attach.set_payload(f.read())
+            encoders.encode_base64(attach)
+            attach.add_header('Content-Disposition', f'attachment; filename= {filename}')
+            msg.attach(attach)
+    except Exception as e:
+        logging.exception(f"File reading error {e}")
+        msg.attach(MIMEText("Файл отчета не был найден", 'plain'))
 
     # Настройка SMTP-сервера Mail.ru
     smtp_server = 'smtp.mail.ru'
@@ -48,7 +52,6 @@ def send_message_to_email(sender_email, recipient_email, password, filename):
         logging.info("Test_1 Starting")
     except Exception as e:
         logging.exception(f"Exception of sending a report {e}")
-
     finally:
         # Завершение соединения с SMTP-сервером
         server.quit()
@@ -60,7 +63,9 @@ def send_message_default():
     send_message_to_email(testdata['fromaddr_report'],
                           testdata['toaddr_report'],
                           testdata['mail_password'],
-                          "log.txt")
+                          "report.html")
+
+
 
 
 if __name__ == "__main__":
