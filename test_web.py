@@ -18,7 +18,7 @@ class SharedObject(object):
 
 
 class TestYandexWeather:
-    with open("testdata.yaml", encoding="utf-8") as f:
+    with open("config.yaml", encoding="utf-8") as f:
         testdata = yaml.safe_load(f)
 
     def test_step1(self, browser):

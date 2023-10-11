@@ -23,7 +23,7 @@ class OperationsHelper(BasePage):
     """
     Реализует вспомогательные методы для поиска и взаимодействия с элементами веб страницы
     """
-    with open("testdata.yaml", encoding="utf-8") as f:
+    with open("config.yaml", encoding="utf-8") as f:
         testdata = yaml.safe_load(f)
 
     @staticmethod

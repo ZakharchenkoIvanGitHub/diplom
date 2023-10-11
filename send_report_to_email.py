@@ -65,7 +65,7 @@ def send_message_to_email(sender_email, recipient_email, password, filename):
 
 
 def send_message_default():
-    with open("testdata.yaml") as f:
+    with open("config.yaml") as f:
         testdata = yaml.safe_load(f)
     send_message_to_email(testdata['fromaddr_report'],
                           testdata['toaddr_report'],
