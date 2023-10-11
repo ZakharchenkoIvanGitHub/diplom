@@ -31,12 +31,12 @@ def browser():
     driver.quit()
 
 
-#def pytest_terminal_summary(terminalreporter, exitstatus):
+# def pytest_terminal_summary(terminalreporter, exitstatus):
 def pytest_sessionfinish(session, exitstatus):
     """
     Отправляет отчет о тестировании после завершения теста
     """
     send_message_to_email(testdata['fromaddr_report'],
-                                    testdata['toaddr_report'],
-                                    testdata['mail_password'],
-                                    "report.html")
+                          testdata['toaddr_report'],
+                          testdata['mail_password'],
+                          "report.html")

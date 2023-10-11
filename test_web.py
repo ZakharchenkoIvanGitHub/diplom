@@ -52,7 +52,6 @@ class TestYandexWeather:
         SharedObject.set(weather_data=weather_data)
         assert weather_data
 
-
     def test_step3(self, browser):
         """
         Тест проверяет, что данные о городе полученные с помощью сервиса API Яндекс.Погоды,
@@ -63,7 +62,6 @@ class TestYandexWeather:
         city_name = test_page.get_city_name(self.testdata["city"])
         assert city_name == json_parser.get_city(SharedObject.get("weather_data"))
 
-
     def test_step4(self, browser):
         """
         Проверка соответствия текущей температуры
@@ -73,7 +71,6 @@ class TestYandexWeather:
         fact_temp = test_page.get_fact_temp()
         assert fact_temp == json_parser.get_fact_temp(SharedObject.get("weather_data"))
 
-
     def test_step5(self, browser):
         """
         Проверка соответствия ощущаемой температуры
@@ -82,7 +79,6 @@ class TestYandexWeather:
         test_page = OperationsHelper(browser)
         feels_like = test_page.get_feels_like()
         assert feels_like == json_parser.get_feels_like(SharedObject.get("weather_data"))
-
 
     def test_step6(self, browser):
         """
@@ -119,7 +115,6 @@ class TestYandexWeather:
         test_page = OperationsHelper(browser)
         wind_speed = test_page.get_wind_speed()
         assert wind_speed == json_parser.get_wind_speed(SharedObject.get("weather_data"))
-
 
     def test_step10(self, browser):
         """

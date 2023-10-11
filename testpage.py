@@ -88,7 +88,7 @@ class OperationsHelper(BasePage):
 
     def click_button(self, locator, description=None):
         """
-        Кликает по элементу найденому по локатору
+        Кликает по элементу найденному по локатору
         :param locator: локатор для поиска элемента
         :param description: описание локатора
         :return: True в случае успеха

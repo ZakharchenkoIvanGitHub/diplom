@@ -15,7 +15,6 @@ def send_message_to_email(sender_email, recipient_email, password, filename):
     :param recipient_email: электронная почта получателя
     :param password: пароль почты отправителя
     :param filename: файл отчета
-    :return:
     """
     now = datetime.datetime.now(datetime.timezone.utc).astimezone()
     time_format = "%Y-%m-%d %H:%M:%S"
@@ -72,8 +71,6 @@ def send_message_default():
                           testdata['toaddr_report'],
                           testdata['mail_password'],
                           "report.html")
-
-
 
 
 if __name__ == "__main__":

@@ -115,6 +115,7 @@ def get_humidity(json_data):
     """
     return str(json_data["fact"]["humidity"])
 
+
 def get_pressure(json_data):
     """
     Возвращает атмосферное давление
@@ -125,5 +126,3 @@ def get_pressure(json_data):
 if __name__ == "__main__":
     with open('1.json', 'r', encoding='utf-8') as f:
         text = json.load(f)
-
-
