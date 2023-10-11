@@ -9,6 +9,14 @@ import datetime
 
 
 def send_message_to_email(sender_email, recipient_email, password, filename):
+    """
+    Функция формирования и отправки письма с отчетом о тестировании на электронную почту
+    :param sender_email: электронная почта отправителя
+    :param recipient_email: электронная почта получателя
+    :param password: пароль почты отправителя
+    :param filename: файл отчета
+    :return:
+    """
     now = datetime.datetime.now(datetime.timezone.utc).astimezone()
     time_format = "%Y-%m-%d %H:%M:%S"
     subject = f"report {now:{time_format}}"
