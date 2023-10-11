@@ -186,13 +186,13 @@ class OperationsHelper(BasePage):
         """
         Возвращает текущую температуру
         """
-        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FACT_TEMP"], description="fact_temp")[1:]
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FACT_TEMP"], description="fact_temp")
 
     def get_feels_like(self):
         """
         Возвращает ощущаемую температуру
         """
-        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FEELS_LIKE"], description="feels_like")[1:]
+        return self.get_text_from_element(TestSearchLocators.ids["LOCATOR_FEELS_LIKE"], description="feels_like")
 
     def get_icon_src(self):
         """

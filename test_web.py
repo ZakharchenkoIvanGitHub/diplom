@@ -78,7 +78,8 @@ class TestYandexWeather:
         logging.info("Test_5 Starting")
         test_page = OperationsHelper(browser)
         feels_like = test_page.get_feels_like()
-        assert feels_like == json_parser.get_feels_like(SharedObject.get("weather_data"))
+        feels_like_json = json_parser.get_feels_like(SharedObject.get("weather_data"))
+        assert feels_like == feels_like_json
 
     def test_step6(self, browser):
         """

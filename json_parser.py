@@ -12,14 +12,24 @@ def get_fact_temp(json_data):
     """
     Возвращает текущую температуру
     """
-    return str(json_data["fact"]["temp"])
+    return get_temp(json_data["fact"]["temp"])
 
 
 def get_feels_like(json_data):
     """
     Возвращает ощущаемую температуру
     """
-    return str(json_data["fact"]["feels_like"])
+    return get_temp(json_data["fact"]["feels_like"])
+
+
+def get_temp(temp):
+    if temp > 0:
+        temp = f"+{temp}"
+    elif temp < 0:
+        temp = f"−{str(temp)[1:]}"
+    else:
+        temp = f"{temp}"
+    return temp
 
 
 def get_icon_src(json_data):
