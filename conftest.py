@@ -4,9 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from send_report_to_email import send_message_to_email
 
-with open("testdata.yaml") as f:
+with open("testdata.yaml", encoding="utf-8") as f:
     testdata = yaml.safe_load(f)
     browser = testdata["browser"]
 
@@ -29,14 +28,3 @@ def browser():
         driver = webdriver.Chrome(service=service, options=options)
     yield driver
     driver.quit()
-
-
-# def pytest_terminal_summary(terminalreporter, exitstatus):
-def pytest_sessionfinish(session, exitstatus):
-    """
-    Отправляет отчет о тестировании после завершения теста
-    """
-    send_message_to_email(testdata['fromaddr_report'],
-                          testdata['toaddr_report'],
-                          testdata['mail_password'],
-                          "report.html")
